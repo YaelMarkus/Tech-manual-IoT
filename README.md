@@ -74,12 +74,20 @@ Preferences
 At the bottom add this URL:
 https://arduino.esp8266.com/stable/package_esp8266com_index.json
 
+![Paste the URL in the settings](image/image5.png)
+
 Then go to: Tools → board → board manager.
+
+![Select the boards manager](image/image2.png)
 
 Search for: esp8266 by ESP8266 Community and install the board package.
 
+![Select the esp8266 board package](image/image17.png)
+
 Now we are going to install ArduinoJSON. To do this go to: Sketch →
 Include library → manage libraries.
+
+![Select manage libraries](image/image15.png)
 
 Then search for: ArduinoJson by Benoit Blanchon. Install the library
 
@@ -88,9 +96,13 @@ are going to need this one for the ledstrip. So use the same steps as
 for the ArduinoJson library, but search for the Adafruit Neopixel
 library.
 
+![Select Adafruit Neopixel](image/image19.png) 
+
+![Select ArduinoJson](image/image1.png)
+
 This was it for step 1
 
-![Step 1 screenshots](images/step1.webp)
+
 
 ## Step 2: Connect the NodeMCU ESP8266
 
@@ -99,14 +111,16 @@ Connect your NodeMCU ESP8266 to you laptop or computer with a USB cable.
 Then open Arduino IDE and select your board. Go to: Tools → Board →
 esp8266 → NodeMCU 1.0 (ESP-12E MODULE)
 
-Now we are going to select the correct port. If you have only one USB C
-port in your laptop Arduino will automatically have it selected. If you
-have multiple, you need to choose the COM port that appears when you
-plug the USB C cable in the laptop.
+![Select the right board](image/image15.png)
+
+Now we are going to select the correct port. Select the COM port that 
+appears when you plug in the esp8266.
+
+![Select the right port](image/image9.png)
 
 This is all for step 2.
 
-![Step 2 screenshots](images/step2.webp)
+
 
 ## Step 3: Connect the NodeMCU to WiFi
 
@@ -114,9 +128,13 @@ In Arduino go to: File → Examples → ESP8266WiFi → WiFiClient. This will
 open another sketch in Arduino. With this sketch you can test if you
 esp8266 can connect with the internet.
 
+![Select the WiFi sketch](image/image20.png)
+
 After the sketch has opened you will see a lot of code. What you want to
 look for are the 2 lines where you can fill in your own WiFi network
 information.
+
+![Change the network information](image/image8.png)
 
 Replace your-ssid with the name of your wifi network and replace
 your-password with your wifi password. Remember to keep the quotes
@@ -126,7 +144,11 @@ When you have done this you can verify and upload the sketch. Do this by
 clicking the checkmark at the top left and after that the arrow pointing
 to the right.
 
+![Verify the sketch](image/image11.png)
+
 First verify
+
+![Upload the sketch](image/image3.png)
 
 Then upload
 
@@ -134,33 +156,41 @@ Then you can open the serial monitor. Click the magnifying glass icon at
 the top right of your
 screen.
 
+![Select the serial monitor](image/image4.png)
+
 If everything worked you should see this in the Serial Monitor:
+
+![Check to see if the connection is made](image/image10.png)
 
 **MAKE SURE** the baud of the serial monitor (top right on the image
 above) is the same as the baud in the code. Set both to 115200 baud.
+
+![Check the baud](image/image6.png)
 
 You can find it at line 20 in the code.
 
 If everything works you can proceed to step 4.
 
-![Step 3 screenshots](images/step3.webp)
+
 
 ## Step 4: Test the TheMealDB API
 
 With step 4 we are checking to see if the API works. Paste this URL in
 your web browser:
-[<u>https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata</u>](https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata)
+
 
 We will check to see if the API can show us the recipe for arrabiata.
 
 If it works you will see something like this:
+
+![Check if the API works](image/image21.png)
 
 The API gives back data in JSON format, which we can later call back on
 in Arduino.
 
 This was it for step 4
 
-![Step 4 screenshots](images/step4.webp)
+
 
 ## Step 5: Connect the NodeMCU to the API
 
@@ -246,10 +276,12 @@ see if the WiFi worked.
 
 If everything went well you should see something like this:
 
+![Check if the connection is made](image/image12.png)
+
 This means the esp8266 connected with the API and the API gave data
 back.
 
-![Step 5 screenshots](images/step5.webp)
+
 
 ## Step 6: Connecting the button to the ESP8266
 
@@ -302,15 +334,19 @@ Verify and upload this sketch.
 
 If everything works you should see this in the serial monitor:
 
+![Check if the sketch works](image/image18.png)
+
 A lot of zeroes, new ones being added in set intervals of 0.3 seconds.
 When you press the button it should turn one zero into a “1”, like this:
+
+![Check if the button works](image/image13.png)
 
 If you see this it means the button works and is connected correctly.  
   
 If you don’t see it then you need to look at the cables and if they are
 connected to the board and the button in the right way.
 
-![Step 7 screenshots](images/step7.webp)
+
 
 ## Step 8: Connecting the ledstrip to the ESP8266
 
@@ -365,12 +401,14 @@ void loop() {
 Make sure to check the amount of leds on the strip, if you have 10 leds
 fill in 10, and change the LED_PIN to D2
 
+![Check PIN and Led count](image/image7.png)
+
 If everything is correct, verify and upload the file.
 
 If the ledstrip turns on and shows yellow lights, it means you can go to
 the next step.
 
-![Step 9 screenshots](images/step9.webp)
+
 
 ## Step 10: Combining the button and the ledstrip with the API
 
@@ -801,11 +839,15 @@ Verify and upload the sketch, so we can see if it works.
 
 In the serial monitor you will see lots of dots appearing:
 
+![Check the dots](image/image10.png)
+
 Press the button and see if you get a message saying it is requesting a
 recipe from the API.
+
+![Test the entire prototype](image/image16.png)
 
 Press the button again to check if the timer works. If the color changes
 every couple of seconds and when the timer is over the ledstrip flashes
 red, it means your prototype works!
 
-![Step 10 screenshots](images/step10.webp)
+
