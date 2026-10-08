@@ -196,7 +196,7 @@ This was it for step 4
 
 Copy this code and place it in your sketch (write over the WiFi test
 sketch, or create a new one):
-
+```cp
 \#include \<ESP8266WiFi.h\>
 
 \#include \<ESP8266HTTPClient.h\>
@@ -266,7 +266,7 @@ http.end();
 void loop() {
 
 }
-
+```
 Remember to change the SSID and the password to those of your network
 and check if the baud from the serial monitor is the same as in the
 code.
