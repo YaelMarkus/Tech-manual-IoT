@@ -90,6 +90,8 @@ library.
 
 This was it for step 1
 
+![Step 1 screenshots](images/step1.webp)
+
 ## Step 2: Connect the NodeMCU ESP8266
 
 Connect your NodeMCU ESP8266 to you laptop or computer with a USB cable.
@@ -103,6 +105,8 @@ have multiple, you need to choose the COM port that appears when you
 plug the USB C cable in the laptop.
 
 This is all for step 2.
+
+![Step 2 screenshots](images/step2.webp)
 
 ## Step 3: Connect the NodeMCU to WiFi
 
@@ -127,7 +131,8 @@ First verify
 Then upload
 
 Then you can open the serial monitor. Click the magnifying glass icon at
-the top right of your screen.
+the top right of your
+screen.
 
 If everything worked you should see this in the Serial Monitor:
 
@@ -138,11 +143,13 @@ You can find it at line 20 in the code.
 
 If everything works you can proceed to step 4.
 
+![Step 3 screenshots](images/step3.webp)
+
 ## Step 4: Test the TheMealDB API
 
 With step 4 we are checking to see if the API works. Paste this URL in
 your web browser:
-https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
+[<u>https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata</u>](https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata)
 
 We will check to see if the API can show us the recipe for arrabiata.
 
@@ -153,59 +160,82 @@ in Arduino.
 
 This was it for step 4
 
+![Step 4 screenshots](images/step4.webp)
+
 ## Step 5: Connect the NodeMCU to the API
 
 Copy this code and place it in your sketch (write over the WiFi test
 sketch, or create a new one):
 
-```cpp
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClientSecure.h>
+\#include \<ESP8266WiFi.h\>
 
-const char* ssid = "YOUR_WIFI_NAME";
-const char* password = "YOUR_WIFI_PASSWORD";
+\#include \<ESP8266HTTPClient.h\>
 
-const char* apiUrl =
+\#include \<WiFiClientSecure.h\>
+
+const char\* ssid = "YOUR_WIFI_NAME";
+
+const char\* password = "YOUR_WIFI_PASSWORD";
+
+const char\* apiUrl =
+
 "https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata";
 
 void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi");
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
+Serial.begin(115200);
 
-  Serial.println();
-  Serial.println("WiFi connected!");
+WiFi.begin(ssid, password);
 
-  WiFiClientSecure client;
-  client.setInsecure();
-  HTTPClient http;
+Serial.print("Connecting to WiFi");
 
-  Serial.println("Connecting to TheMealDB...");
+while (WiFi.status() != WL_CONNECTED) {
 
-  if (http.begin(client, apiUrl)) {
-    int httpCode = http.GET();
-    Serial.print("HTTP code: ");
-    Serial.println(httpCode);
+delay(500);
 
-    if (httpCode > 0) {
-      String response = http.getString();
-      Serial.println("API response:");
-      Serial.println(response);
-    }
+Serial.print(".");
 
-    http.end();
-  }
+}
+
+Serial.println();
+
+Serial.println("WiFi connected!");
+
+WiFiClientSecure client;
+
+client.setInsecure();
+
+HTTPClient http;
+
+Serial.println("Connecting to TheMealDB...");
+
+if (http.begin(client, apiUrl)) {
+
+int httpCode = http.GET();
+
+Serial.print("HTTP code: ");
+
+Serial.println(httpCode);
+
+if (httpCode \> 0) {
+
+String response = http.getString();
+
+Serial.println("API response:");
+
+Serial.println(response);
+
+}
+
+http.end();
+
+}
+
 }
 
 void loop() {
+
 }
-```
 
 Remember to change the SSID and the password to those of your network
 and check if the baud from the serial monitor is the same as in the
@@ -218,6 +248,8 @@ If everything went well you should see something like this:
 
 This means the esp8266 connected with the API and the API gave data
 back.
+
+![Step 5 screenshots](images/step5.webp)
 
 ## Step 6: Connecting the button to the ESP8266
 
@@ -242,23 +274,29 @@ esp8266.
 
 To test if the button works you will need to open a new sketch. When in
 Arduino press ctrl + n, this automatically opens a new sketch. In the
-sketch past this code:
-
-```cpp
+sketch past this code:  
+  
 const int buttonPin = D1;
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(buttonPin, INPUT);
-  Serial.println("Button test started");
+
+Serial.begin(115200);
+
+pinMode(buttonPin, INPUT);
+
+Serial.println("Button test started");
+
 }
 
 void loop() {
-  int buttonState = digitalRead(buttonPin);
-  Serial.println(buttonState);
-  delay(300);
+
+int buttonState = digitalRead(buttonPin);
+
+Serial.println(buttonState);
+
+delay(300);
+
 }
-```
 
 Verify and upload this sketch.
 
@@ -267,10 +305,12 @@ If everything works you should see this in the serial monitor:
 A lot of zeroes, new ones being added in set intervals of 0.3 seconds.
 When you press the button it should turn one zero into a “1”, like this:
 
-If you see this it means the button works and is connected correctly.
-
+If you see this it means the button works and is connected correctly.  
+  
 If you don’t see it then you need to look at the cables and if they are
 connected to the board and the button in the right way.
+
+![Step 7 screenshots](images/step7.webp)
 
 ## Step 8: Connecting the ledstrip to the ESP8266
 
@@ -292,28 +332,35 @@ To test the ledstrip create a new sketch (ctrl + n) or write over the
 button testing sketch, since we won’t need that one anymore (unless your
 button didn’t work!). Paste the following code in you Arduino:
 
-```cpp
-#include <Adafruit_NeoPixel.h>
-#define LED_PIN D2
-#define LED_COUNT 12
+\#include \<Adafruit_NeoPixel.h\>
+
+\#define LED_PIN D2
+
+\#define LED_COUNT 12
 
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  strip.begin();
-  strip.setBrightness(30);
-  strip.show();
 
-  for (int i = 0; i < LED_COUNT; i++) {
-    strip.setPixelColor(i, strip.Color(255, 100, 0));
-  }
+strip.begin();
 
-  strip.show();
+strip.setBrightness(30);
+
+strip.show();
+
+for (int i = 0; i \< LED_COUNT; i++) {
+
+strip.setPixelColor(i, strip.Color(255, 100, 0));
+
+}
+
+strip.show();
+
 }
 
 void loop() {
+
 }
-```
 
 Make sure to check the amount of leds on the strip, if you have 10 leds
 fill in 10, and change the LED_PIN to D2
@@ -322,6 +369,8 @@ If everything is correct, verify and upload the file.
 
 If the ledstrip turns on and shows yellow lights, it means you can go to
 the next step.
+
+![Step 9 screenshots](images/step9.webp)
 
 ## Step 10: Combining the button and the ledstrip with the API
 
@@ -336,278 +385,413 @@ work together on your laptop.
 
 Copy this code and paste it in an Arduino sketch:
 
-```cpp
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <WiFiClientSecure.h>
-#include <Adafruit_NeoPixel.h>
-#include <ArduinoJson.h>
+\#include \<ESP8266WiFi.h\>
+
+\#include \<ESP8266HTTPClient.h\>
+
+\#include \<WiFiClientSecure.h\>
+
+\#include \<Adafruit_NeoPixel.h\>
+
+\#include \<ArduinoJson.h\>
 
 // -------------------- WiFi --------------------
 
-const char* ssid = "YOUR_WIFI_NAME";
-const char* password = "YOUR_WIFI_PASSWORD";
+const char\* ssid = "YOUR_WIFI_NAME";
 
-const char* apiUrl =
+const char\* password = "YOUR_WIFI_PASSWORD";
+
+const char\* apiUrl =
+
 "https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata";
 
 // -------------------- Button --------------------
 
-#define BUTTON_PIN D1
+\#define BUTTON_PIN D1
 
 // Change this to LOW if your button gave LOW when pressed
-#define BUTTON_PRESSED_STATE HIGH
+
+\#define BUTTON_PRESSED_STATE HIGH
 
 bool lastButtonState = !BUTTON_PRESSED_STATE;
 
 // -------------------- LED Strip --------------------
 
-#define LED_PIN D2
-#define LED_COUNT 12
+\#define LED_PIN D2
+
+\#define LED_COUNT 12
 
 Adafruit_NeoPixel strip(
-  LED_COUNT,
-  LED_PIN,
-  NEO_GRB + NEO_KHZ800
+
+LED_COUNT,
+
+LED_PIN,
+
+NEO_GRB + NEO_KHZ800
+
 );
 
 // -------------------- SmartOven states --------------------
 
 bool recipeReceived = false;
+
 bool timerRunning = false;
+
 bool timerFinished = false;
 
 unsigned long timerStart = 0;
+
 const unsigned long timerDuration = 15000; // 15 seconds
 
 int previousSecond = -1;
 
 // Flashing red
+
 unsigned long previousFlash = 0;
+
 bool flashState = false;
 
 // ============================================================
+
 // SETUP
+
 // ============================================================
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(BUTTON_PIN, INPUT);
 
-  strip.begin();
-  strip.setBrightness(30);
-  strip.show();
+Serial.begin(115200);
 
-  connectWiFi();
+pinMode(BUTTON_PIN, INPUT);
 
-  Serial.println();
-  Serial.println("SmartOven ready.");
-  Serial.println("Press the button to request a recipe.");
+strip.begin();
+
+strip.setBrightness(30);
+
+strip.show();
+
+connectWiFi();
+
+Serial.println();
+
+Serial.println("SmartOven ready.");
+
+Serial.println("Press the button to request a recipe.");
+
 }
 
 // ============================================================
+
 // LOOP
+
 // ============================================================
 
 void loop() {
-  checkButton();
 
-  if (timerRunning) {
-    updateTimer();
-  }
+checkButton();
 
-  if (timerFinished) {
-    flashRed();
-  }
+if (timerRunning) {
+
+updateTimer();
+
+}
+
+if (timerFinished) {
+
+flashRed();
+
+}
+
 }
 
 // ============================================================
+
 // WIFI
+
 // ============================================================
 
 void connectWiFi() {
-  Serial.print("Connecting to WiFi");
-  WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
+Serial.print("Connecting to WiFi");
 
-  Serial.println();
-  Serial.println("WiFi connected!");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+WiFi.begin(ssid, password);
+
+while (WiFi.status() != WL_CONNECTED) {
+
+delay(500);
+
+Serial.print(".");
+
+}
+
+Serial.println();
+
+Serial.println("WiFi connected!");
+
+Serial.print("IP address: ");
+
+Serial.println(WiFi.localIP());
+
 }
 
 // ============================================================
+
 // BUTTON
+
 // ============================================================
 
 void checkButton() {
-  bool currentButtonState = digitalRead(BUTTON_PIN);
 
-  // Detect a new button press
-  if (
-    currentButtonState == BUTTON_PRESSED_STATE &&
-    lastButtonState != BUTTON_PRESSED_STATE
-  ) {
-    delay(50); // simple debounce
+bool currentButtonState = digitalRead(BUTTON_PIN);
 
-    if (!recipeReceived) {
-      getRecipe();
-    } else if (!timerRunning && !timerFinished) {
-      startTimer();
-    }
-  }
+// Detect a new button press
 
-  lastButtonState = currentButtonState;
+if (
+
+currentButtonState == BUTTON_PRESSED_STATE &&
+
+lastButtonState != BUTTON_PRESSED_STATE
+
+) {
+
+delay(50); // simple debounce
+
+if (!recipeReceived) {
+
+getRecipe();
+
+} else if (!timerRunning && !timerFinished) {
+
+startTimer();
+
+}
+
+}
+
+lastButtonState = currentButtonState;
+
 }
 
 // ============================================================
+
 // API
+
 // ============================================================
 
 void getRecipe() {
-  Serial.println();
-  Serial.println("Button pressed.");
-  Serial.println("Requesting recipe from TheMealDB...");
 
-  WiFiClientSecure client;
-  client.setInsecure();
+Serial.println();
 
-  HTTPClient http;
+Serial.println("Button pressed.");
 
-  if (http.begin(client, apiUrl)) {
-    int httpCode = http.GET();
+Serial.println("Requesting recipe from TheMealDB...");
 
-    Serial.print("HTTP code: ");
-    Serial.println(httpCode);
+WiFiClientSecure client;
 
-    if (httpCode == 200) {
-      String response = http.getString();
-      JsonDocument doc;
+client.setInsecure();
 
-      DeserializationError error =
-        deserializeJson(doc, response);
+HTTPClient http;
 
-      if (!error) {
-        const char* mealName =
-          doc["meals"][0]["strMeal"];
+if (http.begin(client, apiUrl)) {
 
-        Serial.println();
-        Serial.println("Recipe received!");
-        Serial.print("Recipe: ");
-        Serial.println(mealName);
+int httpCode = http.GET();
 
-        recipeReceived = true;
+Serial.print("HTTP code: ");
 
-        Serial.println();
-        Serial.println(
-          "Press the button again to start the 15 second timer."
-        );
-      } else {
-        Serial.println("Could not read JSON data.");
-      }
-    } else {
-      Serial.println("API request failed.");
-    }
+Serial.println(httpCode);
 
-    http.end();
-  }
+if (httpCode == 200) {
+
+String response = http.getString();
+
+JsonDocument doc;
+
+DeserializationError error =
+
+deserializeJson(doc, response);
+
+if (!error) {
+
+const char\* mealName =
+
+doc\["meals"\]\[0\]\["strMeal"\];
+
+Serial.println();
+
+Serial.println("Recipe received!");
+
+Serial.print("Recipe: ");
+
+Serial.println(mealName);
+
+recipeReceived = true;
+
+Serial.println();
+
+Serial.println(
+
+"Press the button again to start the 15 second timer."
+
+);
+
+} else {
+
+Serial.println("Could not read JSON data.");
+
+}
+
+} else {
+
+Serial.println("API request failed.");
+
+}
+
+http.end();
+
+}
+
 }
 
 // ============================================================
+
 // TIMER
+
 // ============================================================
 
 void startTimer() {
-  timerRunning = true;
-  timerStart = millis();
-  previousSecond = -1;
 
-  Serial.println();
-  Serial.println("Timer started!");
+timerRunning = true;
+
+timerStart = millis();
+
+previousSecond = -1;
+
+Serial.println();
+
+Serial.println("Timer started!");
+
 }
 
 // ============================================================
+
 // UPDATE TIMER
+
 // ============================================================
 
 void updateTimer() {
-  unsigned long elapsed = millis() - timerStart;
 
-  int remaining =
-    15 - (elapsed / 1000);
+unsigned long elapsed = millis() - timerStart;
 
-  if (remaining <= 0) {
-    timerRunning = false;
-    timerFinished = true;
+int remaining =
 
-    Serial.println();
-    Serial.println("Timer finished!");
-    Serial.println("Your food is ready!");
+15 - (elapsed / 1000);
 
-    return;
-  }
+if (remaining \<= 0) {
 
-  // Only print when the displayed second changes
-  if (remaining != previousSecond) {
-    previousSecond = remaining;
+timerRunning = false;
 
-    Serial.print("Time remaining: ");
-    Serial.print(remaining);
-    Serial.println(" seconds");
+timerFinished = true;
 
-    // 15 - 10 seconds = GREEN
-    if (remaining >= 10) {
-      setStripColor(0, 255, 0);
-    }
+Serial.println();
 
-    // 9 - 6 seconds = YELLOW
-    else if (remaining >= 6) {
-      setStripColor(255, 150, 0);
-    }
+Serial.println("Timer finished!");
 
-    // 5 - 1 seconds = RED
-    else {
-      setStripColor(255, 0, 0);
-    }
-  }
+Serial.println("Your food is ready!");
+
+return;
+
+}
+
+// Only print when the displayed second changes
+
+if (remaining != previousSecond) {
+
+previousSecond = remaining;
+
+Serial.print("Time remaining: ");
+
+Serial.print(remaining);
+
+Serial.println(" seconds");
+
+// 15 - 10 seconds = GREEN
+
+if (remaining \>= 10) {
+
+setStripColor(0, 255, 0);
+
+}
+
+// 9 - 6 seconds = YELLOW
+
+else if (remaining \>= 6) {
+
+setStripColor(255, 150, 0);
+
+}
+
+// 5 - 1 seconds = RED
+
+else {
+
+setStripColor(255, 0, 0);
+
+}
+
+}
+
 }
 
 // ============================================================
+
 // FLASH RED
+
 // ============================================================
 
 void flashRed() {
-  if (millis() - previousFlash >= 500) {
-    previousFlash = millis();
-    flashState = !flashState;
 
-    if (flashState) {
-      setStripColor(255, 0, 0);
-    } else {
-      setStripColor(0, 0, 0);
-    }
-  }
+if (millis() - previousFlash \>= 500) {
+
+previousFlash = millis();
+
+flashState = !flashState;
+
+if (flashState) {
+
+setStripColor(255, 0, 0);
+
+} else {
+
+setStripColor(0, 0, 0);
+
+}
+
+}
+
 }
 
 // ============================================================
+
 // LED COLOR
+
 // ============================================================
 
 void setStripColor(int red, int green, int blue) {
-  for (int i = 0; i < LED_COUNT; i++) {
-    strip.setPixelColor(
-      i,
-      strip.Color(red, green, blue)
-    );
-  }
 
-  strip.show();
+for (int i = 0; i \< LED_COUNT; i++) {
+
+strip.setPixelColor(
+
+i,
+
+strip.Color(red, green, blue)
+
+);
+
 }
-```
+
+strip.show();
+
+}
 
 Make sure you filled in your wifi network information and checked the
 pins of both the button and the ledstrip, also check the baud of the
@@ -623,3 +807,5 @@ recipe from the API.
 Press the button again to check if the timer works. If the color changes
 every couple of seconds and when the timer is over the ledstrip flashes
 red, it means your prototype works!
+
+![Step 10 screenshots](images/step10.webp)
