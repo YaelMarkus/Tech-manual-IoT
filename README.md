@@ -307,7 +307,7 @@ esp8266.
 To test if the button works you will need to open a new sketch. When in
 Arduino press ctrl + n, this automatically opens a new sketch. In the
 sketch past this code:  
-  
+```cp  
 const int buttonPin = D1;
 
 void setup() {
@@ -329,7 +329,7 @@ Serial.println(buttonState);
 delay(300);
 
 }
-
+```
 Verify and upload this sketch.
 
 If everything works you should see this in the serial monitor:
@@ -367,7 +367,7 @@ The GND cable should go on a G pin on the esp8266.
 To test the ledstrip create a new sketch (ctrl + n) or write over the
 button testing sketch, since we won’t need that one anymore (unless your
 button didn’t work!). Paste the following code in you Arduino:
-
+```cp
 \#include \<Adafruit_NeoPixel.h\>
 
 \#define LED_PIN D2
@@ -397,7 +397,7 @@ strip.show();
 void loop() {
 
 }
-
+```
 Make sure to check the amount of leds on the strip, if you have 10 leds
 fill in 10, and change the LED_PIN to D2
 
@@ -422,7 +422,7 @@ prototype to show how the esp8266, a button, a ledstrip, and an API can
 work together on your laptop.
 
 Copy this code and paste it in an Arduino sketch:
-
+```cp
 \#include \<ESP8266WiFi.h\>
 
 \#include \<ESP8266HTTPClient.h\>
@@ -830,7 +830,7 @@ strip.Color(red, green, blue)
 strip.show();
 
 }
-
+```
 Make sure you filled in your wifi network information and checked the
 pins of both the button and the ledstrip, also check the baud of the
 serial monitor.
